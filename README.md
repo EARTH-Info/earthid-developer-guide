@@ -9,7 +9,7 @@ EarthID Enterprise is an identity and single sign-on platform supplied by EARTH 
 | Framework | Start here | Example |
 | --- | --- | --- |
 | **Next.js (App Router)** | [Next.js integration guide](nextjs/README.md) | [Next.js starter](nextjs/starter/) |
-| **ASP.NET Core (Razor Pages / minimal app)** | [ASP.NET integration guide](aspnet/README.md) | [ASP.NET Core starter](aspnet/starter/) |
+| **ASP.NET Core (Razor Pages)** | [ASP.NET integration guide](aspnet/README.md) | [ASP.NET Core starter](aspnet/starter/) |
 
 Both starters demonstrate the **OIDC Authorization Code Flow with PKCE** and use application-controlled sessions. The Next.js example distinguishes local logout from organization-wide SSO logout. Never treat a successful login as proof that your application's authorization rules are correct.
 
@@ -65,7 +65,7 @@ Read [SECURITY.md](SECURITY.md) before contributing. Only publish protocol guida
 ## Project status and provenance
 
 - **Next.js:** App Router starter using NextAuth.js 4.24.15 (security-patched stable 4.x) and server-side OIDC callback.
-- **ASP.NET:** Adapted from the existing [EARTH-Info/earthid-aspnet-guide](https://github.com/EARTH-Info/earthid-aspnet-guide); simplified for public distribution and no longer prints tokens.
+- **ASP.NET:** Updated to .NET 10 LTS and adapted from the existing [EARTH-Info/earthid-aspnet-guide](https://github.com/EARTH-Info/earthid-aspnet-guide); simplified for public distribution and no longer prints tokens.
 - **End-to-end authentication depends on having an approved client and test account.** The code is an example, not a claim that integration/UAT against DBKK production has succeeded.
 
 Documentation date: 13 November 2026.
