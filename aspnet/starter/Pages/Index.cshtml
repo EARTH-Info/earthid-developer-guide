@@ -1,0 +1,27 @@
+@page
+@model IndexModel
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EarthID ASP.NET Core Demo</title>
+</head>
+<body style="font-family:system-ui;max-width:680px;margin:3rem auto;padding:0 1rem">
+  <h1>EarthID Enterprise — ASP.NET Core demo</h1>
+  <p>Vendor integration sample: Authorization Code Flow with PKCE.</p>
+  @if (User.Identity?.IsAuthenticated == true)
+  {
+    <p>Signed in. <a href="/Profile">Open protected profile</a></p>
+    <form method="post" asp-page-handler="Logout">
+      <button type="submit">Sign out (application + OIDC request)</button>
+    </form>
+    <p><small>Central SSO logout must be verified with the deployment owner.</small></p>
+  }
+  else
+  {
+    <p>Not signed in. <a href="/login">Sign in with EarthID</a></p>
+  }
+</body>
+</html>

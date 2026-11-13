@@ -1,0 +1,22 @@
+@page
+@model ProfileModel
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Protected profile</title>
+</head>
+<body style="font-family:system-ui;max-width:680px;margin:3rem auto;padding:0 1rem">
+  <h1>Protected profile</h1>
+  <p>The external identity key is the pair (issuer, sub). Do not use email or NRIC as the immutable key.</p>
+  <dl>
+    <dt>Subject (sub)</dt><dd>@(User.FindFirst("sub")?.Value ?? "Not provided")</dd>
+    <dt>Display name</dt><dd>@(User.FindFirst("name")?.Value ?? "Not provided")</dd>
+    <dt>Email</dt><dd>@(User.FindFirst("email")?.Value ?? "Not provided")</dd>
+  </dl>
+  <p>No access tokens, ID tokens, refresh tokens or other sensitive claims are rendered.</p>
+  <a href="/">Back to home</a>
+</body>
+</html>
