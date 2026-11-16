@@ -13,6 +13,18 @@ EarthID Enterprise provides identity authentication and single sign-on. Your app
 | **PHP 8.3+** | [PHP guide](php/README.md) | [Plain PHP starter](php/starter/) · [Laravel reference](php/laravel/) |
 | **Browser-only SPA (React, Vue, Angular, plain JS)** | [SPA public-client guide](spa/README.md) | [Vite + TypeScript starter](spa/starter/) |
 
+## Identity verification without app sign-up or login
+
+**[MyKad Verification via MyDigital ID](verification/mykad/README.md)** — a separate EarthID Enterprise capability for verifying an individual's MyKad identity during a one-time transaction **without creating an account or logging in to the client application**. The person completes a MyDigital ID challenge; EarthID redirects a signed `result_token` to your registered callback. Your application validates the result using EarthID's public JWKS, then applies its own business rules.
+
+The organization implementing EarthID Enterprise provides the **MyKad Verification Client ID**, the correct service base URL, exact result-token issuer, JWKS URL, and approves your exact callback URI. The **v2.0 verification start request does not require a Client Secret or NRIC**. This verification flow is **not** OIDC SSO login and does not automatically establish a general login session.
+
+- [Full API contract, sequence flow, JWT fields, errors, scenarios](verification/mykad/README.md)
+- [Signed result verification example and offline tests](verification/mykad/examples/)
+- [Verification UAT checklist](verification/mykad/UAT.md)
+
+## Platform-specific SSO guides
+
 Each platform guide provides onboarding steps, example code, login/session/logout concepts and verification requirements. The starter applications illustrate **OIDC Authorization Code Flow with PKCE**. Server-side samples use confidential clients; the browser-only SPA uses a **public client with NO Client Secret**. The examples are public reference implementations, not production-certified integrations.
 
 ## Before you start: obtain your credentials

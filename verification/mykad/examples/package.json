@@ -1,0 +1,16 @@
+{
+  "name": "earthid-mykad-result-verification-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check verify-result.mjs && node --check verify-result.test.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "jose": "^6.1.0"
+  }
+}
