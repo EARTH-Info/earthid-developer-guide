@@ -4,7 +4,7 @@
 
 The [standalone PHP starter](../starter/) is runnable without Laravel. **Do not paste its native-PHP session handling into Laravel**. Laravel has its own session, HTTP, caching and CSRF middleware.
 
-## What this guide adopts from the EarthBiz architecture
+## Separation of identity and application responsibilities
 
 An enterprise business application commonly needs three separate responsibilities:
 
@@ -30,7 +30,7 @@ Ask the EarthID deployment administrator to register your **confidential web cli
 - Scope \`openid profile email\` (any extra scope requires justification and approval).
 - Optional, exact post-logout URI for a **separately tested** global SSO logout flow.
 
-Previously supplied DBKK documentation lists \`https://idp.dbkk.my/api/earthid\` as a **provisional** issuer. Confirm it is currently live, and that the discovery document's \`issuer\` is identical, before deploying.
+For illustration, the fictional host \`https://earthid.organization-domain.com\` is shown below. The organization implementing EarthID Enterprise supplies the real **Issuer URL**, **Client ID** and **Client Secret**. The actual Issuer URL may include a path; it must exactly match the discovery document's \`issuer\` value.
 
 ## 2. Configure Laravel
 
@@ -48,7 +48,7 @@ In your existing Laravel application's **\`config/services.php\`**, add:
 In your **local** \`.env\`, enter privately supplied values:
 
 \`\`\`dotenv
-EARTHID_ISSUER=https://idp.dbkk.my/api/earthid
+EARTHID_ISSUER=https://earthid.organization-domain.com
 EARTHID_CLIENT_ID=your-approved-client-id
 EARTHID_CLIENT_SECRET=your-private-client-secret
 EARTHID_REDIRECT_URI=http://localhost:8000/earthid/callback
@@ -118,6 +118,6 @@ If your application has public, staff and admin entry points, the gate selected 
 
 Follow the [PHP UAT checklist](../UAT.md). Include rejection of invalid state, expired code, invalid signature or audience, unauthorized business actions, and stale or missing sessions. CI can lint this template but cannot validate a production EarthID deployment or local account mapping.
 
-## Source and attribution
+## External library
 
-This guide's **architecture** was informed by review of the latest available EarthBiz-Gateway code as at 16 November 2026. That repository is private; no private paths, credentials, deployment settings or application-specific code are reproduced here. The implementation is deliberately rewritten for a security-focused public vendor guide. External library usage: [firebase/php-jwt](https://github.com/firebase/php-jwt).
+JWT validation in the reference controller uses [firebase/php-jwt](https://github.com/firebase/php-jwt).

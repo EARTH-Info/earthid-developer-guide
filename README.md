@@ -1,73 +1,80 @@
-# EarthID Enterprise — Developer Integration Guides
+# EarthID Enterprise — Developer Integration Guide
 
-Public, vendor-facing integration documentation for applications that authenticate users through **EarthID Enterprise** using OpenID Connect (OIDC).
+Public integration documentation for software vendors building applications that authenticate users through **EarthID Enterprise** using OpenID Connect (OIDC).
 
-EarthID Enterprise is an identity and single sign-on platform supplied by EARTH Info. A deployment such as **DBKK ID** or **JTU SSO** is an organization-specific configuration of the platform. Your application integrates with the deployment's **issuer**, not with EARTH Info's internal infrastructure.
+EarthID Enterprise provides identity authentication and single sign-on. Your application redirects users to your organization's EarthID Enterprise service, handles the verified OIDC response, and remains responsible for application-specific permissions and business workflows.
 
-## Choose your framework
+## Choose your platform
 
-| Framework | Start here | Example |
+| Platform | Integration guide | Example application |
 | --- | --- | --- |
-| **Next.js (App Router)** | [Next.js integration guide](nextjs/README.md) | [Next.js starter](nextjs/starter/) |
-| **ASP.NET Core (Razor Pages)** | [ASP.NET integration guide](aspnet/README.md) | [ASP.NET Core starter](aspnet/starter/) |
-| **PHP 8.3+ (plain PHP + Laravel)** | [PHP integration guide](php/README.md) | [PHP starter](php/starter/) · [Laravel reference](php/laravel/) |
+| **Next.js (App Router)** | [Next.js guide](nextjs/README.md) | [Next.js starter](nextjs/starter/) |
+| **ASP.NET Core (Razor Pages)** | [ASP.NET guide](aspnet/README.md) | [ASP.NET Core starter](aspnet/starter/) |
+| **PHP 8.3+** | [PHP guide](php/README.md) | [Plain PHP starter](php/starter/) · [Laravel reference](php/laravel/) |
 
-All starters demonstrate the **OIDC Authorization Code Flow with PKCE** and use application-controlled sessions. The Next.js example distinguishes local logout from organization-wide SSO logout. Never treat a successful login as proof that your application's authorization rules are correct.
+Each platform guide provides onboarding steps, example code, login/session/logout concepts and verification requirements. The starter applications illustrate **OIDC Authorization Code Flow with PKCE**. The examples are public reference implementations, not production-certified integrations.
 
-## How it works
+## Before you start: obtain your credentials
 
-```text
-User → Vendor app → Redirect to EarthID authorization endpoint
-                    ← Authentication at EarthID (method depends on deployment)
-     ← Authorization code sent to registered callback
-Vendor backend → Exchanges code and validates tokens
-Vendor app → Creates local session and applies app-specific permissions
-```
+**The organization implementing EarthID Enterprise will provide the integration details for your application.** Request all three of these from that organization's EarthID Enterprise administrator:
 
-An application's onboarding **requires approval** by the relevant deployment administrator. Publishing this guide does **not** grant access to any EarthID deployment, user directory, production client, or MyDigital ID integration.
+| Required value | Who supplies it | Purpose |
+| --- | --- | --- |
+| **Issuer URL** | The organization implementing EarthID Enterprise | Identifies the correct OIDC service; used to obtain its discovery metadata |
+| **Client ID** | The same organization | Identifies your registered application to EarthID Enterprise |
+| **Client Secret** | The same organization, through an approved **private** channel | Authenticates your confidential, server-side application at the token endpoint |
 
-## Current public configuration example: DBKK ID
+The organization must also **register and approve your application's exact callback/redirect URI**, applicable environments and requested scopes. For a confidential web client, both Client ID and Client Secret must match the registration for the issuer you are using.
 
-The previously supplied DBKK integration document identifies the following **provisional** issuer:
+**Example organization host (illustration only):**
 
 ```text
-https://idp.dbkk.my/api/earthid
+https://earthid.organization-domain.com
 ```
 
-Discovery URL derived from it:
+This is a **placeholder hostname**, not a public EarthID Enterprise service or a guaranteed issuer. The real **Issuer URL** may include an additional path; use exactly what the implementing organization provides, and confirm it against the discovery document's `issuer` field. Do not guess your issuer, authorization, token or JWKS endpoints from the sample hostname.
+
+### Example environment variables
+
+```dotenv
+# Illustration only — replace ALL values with those provided by your organization.
+EARTHID_ISSUER=https://earthid.organization-domain.com
+EARTHID_CLIENT_ID=your-registered-client-id
+EARTHID_CLIENT_SECRET=your-private-client-secret
+```
+
+Store the real secret in server-side environment variables or a secrets manager. **Never commit credentials to GitHub, expose them in a frontend bundle, or share them in screenshots or issue reports.**
+
+## How EarthID Enterprise sign-in works
 
 ```text
-https://idp.dbkk.my/api/earthid/.well-known/openid-configuration
+User -> Your application -> Redirect to organization's EarthID Enterprise
+     <- User signs in using the organization's configured authentication methods
+     <- EarthID redirects an authorization code to your registered callback
+Your application backend -> Exchanges the code with PKCE and validates tokens
+Your application -> Creates its own session and applies its own permissions
 ```
 
-**Important:** Endpoint reachability and the issuer value must be confirmed by the deployment administrator during client onboarding. These values can change. Obtain the **exact** issuer from discovery; do not hardcode authorization/token/JWKS paths. Do not configure an announced future domain before it is formally enabled.
+Your application should use the **(issuer, sub)** pair as an external identity key and independently enforce all business authorization. Additional claims, identity verification methods and organization-wide logout behavior depend on the implementing organization's configuration and approval.
 
 ## First-time developer checklist
 
-1. Select the [Next.js](nextjs/README.md), [ASP.NET](aspnet/README.md) or [PHP](php/README.md) guide.
-2. Request a client registration for the **specific deployment** you will use; provide the application name, exact callback URL, post-logout URL (if required), environment and minimal scopes.
-3. Receive your client ID and (for a confidential client) secret **through an approved private channel**.
-4. Configure environment variables locally; never commit actual secrets or tokens.
-5. Verify that OIDC discovery's `issuer` matches the issuer configured in the application **exactly**.
-6. Run the starter, sign in with an authorized test account, and check that a protected route is denied when unauthenticated.
-7. Validate login errors, logout semantics, cookie security and permissions before production release.
+1. Choose the platform guide above.
+2. Request the **Issuer URL, Client ID and Client Secret** from the organization that operates your EarthID Enterprise deployment.
+3. Ask that organization to register the **exact callback URI** and approve minimal scopes such as `openid profile email` when appropriate.
+4. Configure the starter using local, uncommitted environment settings.
+5. Verify discovery and the exact issuer, then test sign-in with an authorized test account.
+6. Confirm a signed-out user cannot access protected pages, and authenticated users cannot perform unauthorized business operations.
+7. Test session expiry, errors and **local versus organization-wide SSO logout** before production.
 
-## Identity versus application authorization
+## Security and support
 
-- EarthID authenticates the person and returns identity claims granted to the client.
-- Your **application** decides what that person may view, edit, submit or approve.
-- Use the **(issuer, sub)** pair as the stable external identity key; do not key solely on email, name, NRIC or a role claim. The `sub` alone can collide across issuers.
-- MyDigital ID availability, additional scopes or custom claims are **deployment- and client-specific**, not automatically available because a UI displays a sign-in option.
+Read [SECURITY.md](SECURITY.md) before contributing. This public repository must contain only generic product documentation, safe sample data and sanitized code. It must not contain real client credentials, user data, customer implementation details, internal infrastructure, non-public administrative endpoints or security incident information.
 
-## Public documentation policy
+For client provisioning, issuer details, scopes, test accounts or logout capabilities, **contact the organization that implements and operates EarthID Enterprise**. Publishing this guide does not automatically grant access to an organization's deployment.
 
-Read [SECURITY.md](SECURITY.md) before contributing. Only publish protocol guidance, public endpoints, fictitious example data and sanitized starter code. Do not publish real credentials, private architecture, internal IPs, firewall rules, customer data, security findings, account identifiers, or screenshots containing personal information.
+## Validation status
 
-## Project status and provenance
+The starters include build/syntax checks in [GitHub Actions](.github/workflows/ci.yml). These do **not** replace live OIDC integration tests, application authorization review, or the implementing organization's UAT approval.
 
-- **Next.js:** App Router starter using NextAuth.js 4.24.15 (security-patched stable 4.x) and server-side OIDC callback.
-- **ASP.NET:** Updated to .NET 10 LTS and adapted from the existing [EARTH-Info/earthid-aspnet-guide](https://github.com/EARTH-Info/earthid-aspnet-guide); simplified for public distribution and no longer prints tokens.
-- **PHP:** Standalone PHP 8.3+ OIDC starter and a Laravel reference. This guide was informed by a private enterprise app's identity workflow, but contains no private source, credentials or deployment details.
-- **End-to-end authentication depends on having an approved client and test account.** The code is an example, not a claim that integration/UAT against DBKK production has succeeded.
-
-Documentation last updated: 16 November 2026.
+Last updated: 16 November 2026.

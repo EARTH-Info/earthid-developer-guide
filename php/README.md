@@ -1,6 +1,6 @@
 # EarthID Enterprise — PHP developer guide
 
-**Target:** external vendors integrating a PHP application with an EarthID Enterprise deployment (for example, DBKK ID). This guide assumes no previous knowledge of EarthID.
+**Target:** external vendors integrating a PHP application with an organization's EarthID Enterprise deployment. This guide assumes no previous knowledge of EarthID.
 
 ## Choose your PHP application type
 
@@ -11,9 +11,9 @@
 
 The Laravel guide follows the **architectural use case** of an existing business application: EarthID authenticates a person; the business application owns user profiles and business permissions. The guide is rewritten independently for public use; it does **not** publish private application code or operational details.
 
-## What are EarthID Enterprise and DBKK ID?
+## What is EarthID Enterprise?
 
-EarthID Enterprise is an Identity and Access Management / Single Sign-On (SSO) platform. DBKK ID is an organization-specific deployment of EarthID Enterprise. In the OIDC flow:
+EarthID Enterprise is an Identity and Access Management / Single Sign-On (SSO) platform. The organization implementing EarthID Enterprise provides your application's Issuer URL, Client ID and Client Secret. In the OIDC flow:
 
 \`\`\`text
 User selects "Sign in with EarthID" in your PHP app
@@ -35,19 +35,19 @@ User selects "Sign in with EarthID" in your PHP app
 4. Exact redirect URI(s) registered against that client; no guessing or wildcards.
 5. The issuer confirmed against its live **OpenID Connect discovery document**.
 
-Previously supplied DBKK integration material identifies the **provisional** issuer:
+For illustration only, the following **placeholder** issuer host might be used by an organization. Your actual Issuer URL is supplied by the organization and may include a path:
 
 \`\`\`text
-https://idp.dbkk.my/api/earthid
+https://earthid.organization-domain.com
 \`\`\`
 
 The derived discovery URL is:
 
 \`\`\`text
-https://idp.dbkk.my/api/earthid/.well-known/openid-configuration
+https://earthid.organization-domain.com/.well-known/openid-configuration
 \`\`\`
 
-The public example is **not** proof that the endpoint is currently reachable or that your client has been approved. Confirm it with the deployment owner and use the exact issuer returned by discovery. Do not hardcode token, authorization or JWKS endpoints, and do not switch to an unannounced domain.
+This fictional example is **not a live endpoint**. Obtain the exact Issuer URL from the implementing organization and verify that discovery returns the same `issuer`. Do not hardcode token, authorization or JWKS endpoints or assume the example hostname is operational.
 
 ### Client registration template
 

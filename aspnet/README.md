@@ -2,14 +2,15 @@
 
 **Audience:** vendor developers building server-rendered ASP.NET Core web applications.
 
-This is an updated, publicly distributable adaptation of the existing [EARTH-Info/earthid-aspnet-guide](https://github.com/EARTH-Info/earthid-aspnet-guide). The older sample demonstrated ASP.NET Core Razor Pages, a cookie-authenticated local session, OIDC Authorization Code + PKCE, a popup callback, and two-step logout. The starter here deliberately simplifies it to a standard full-page redirect (more reliable on mobile) and removes all raw-token display.
+
+This public starter uses a conventional browser redirect, a local authentication cookie and a server-side OIDC callback. It does not display tokens to users.
 
 **Runtime:** ASP.NET Core **10.0 LTS** (the original sample used .NET 8). It uses the security-patched `Microsoft.AspNetCore.Authentication.OpenIdConnect` 10.0.15 package and a modern supported .NET SDK. **ASP.NET Framework MVC 5 is not covered by this ASP.NET Core example.**
 
-## 1. Understand EarthID, DBKK ID and your app
+## 1. Understand EarthID Enterprise and your app
 
 - **EarthID Enterprise:** IAM / SSO platform.
-- **DBKK ID:** one deployment using EarthID.
+- **Your organization's EarthID service:** configured and operated by the organization implementing EarthID Enterprise.
 - **Your ASP.NET app:** OIDC relying party (RP) with its own user session and business authorization.
 
 ```text
@@ -27,16 +28,16 @@ Request the following **per deployment and environment**, before testing:
 
 | Field | Local example |
 | --- | --- |
-| Approved issuer | `https://idp.dbkk.my/api/earthid` (provisional example; confirm live discovery) |
+| Issuer URL | Provided by the organization (placeholder example: `https://earthid.organization-domain.com`) |
 | Client type | Confidential web client |
-| Client ID | Issued by the deployment administrator |
-| Client secret | Delivered through an approved private channel |
+| Client ID | Provided by the organization implementing EarthID Enterprise |
+| Client Secret | Provided securely by that organization through an approved private channel |
 | Callback URI | `https://localhost:7043/signin-oidc` |
 | Post-logout callback | `https://localhost:7043/signout-callback-oidc` |
 | Scopes | `openid profile email` |
 | Test account | Authorized non-production identity |
 
-The provisional DBKK issuer above comes from supplied integration notes, **not from a successfully completed live endpoint test**. The exact issuer must equal discovery's `issuer` value. Do not guess a planned future hostname.
+The hostname above is a fictional example. The organization implementing EarthID Enterprise provides the real **Issuer URL**, **Client ID** and **Client Secret**; the issuer may include a path. The Issuer URL must exactly match discovery's `issuer` value. Do not assume the sample hostname is a live service.
 
 Every client redirect must be registered **exactly**, including scheme, port, path and trailing slash. The operator decides permitted post-logout URIs and available scopes.
 
@@ -52,7 +53,7 @@ cd aspnet/starter
 The sample deliberately uses .NET **User Secrets** for local sensitive configuration, rather than publishing a real `.env` file. Run:
 
 ```bash
-dotnet user-secrets set "EarthId:Issuer" "https://idp.dbkk.my/api/earthid"
+dotnet user-secrets set "EarthId:Issuer" "https://earthid.organization-domain.com"
 dotnet user-secrets set "EarthId:ClientId" "your-approved-client-id"
 dotnet user-secrets set "EarthId:ClientSecret" "your-private-client-secret"
 dotnet run --launch-profile https
@@ -131,8 +132,4 @@ Avoid logging tokens and personally identifiable claims. For support, share only
 - [ ] Auth errors do not disclose credentials or tokens.
 - [ ] Prove changes with an approved client and redacted evidence.
 
-**Not yet claimed:** the starter has not been run against a live DBKK client here; successful end-to-end integration requires credentials and the operator's UAT sign-off.
-
-## Original source and technical notes
-
-The [original ASP.NET guide](https://github.com/EARTH-Info/earthid-aspnet-guide) is preserved as historical reference. Its .NET 8 sample printed tokens, favored popup navigation, used deployment-specific JTU endpoints and linked to a local `file:///` path. This adaptation updates the framework version, corrects public guidance and removes those behaviors rather than treating every old implementation choice as a platform requirement.
+**Not yet claimed:** the starter has not been tested against an organization's live EarthID Enterprise client here; successful end-to-end integration requires issued credentials and that organization's UAT sign-off.

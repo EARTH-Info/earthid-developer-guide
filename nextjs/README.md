@@ -10,7 +10,7 @@
 
 ## 1. What is EarthID?
 
-EarthID Enterprise is an identity and SSO platform. **DBKK ID** is an organization-specific deployment. Your app remains responsible for permissions and business workflow.
+EarthID Enterprise is an identity and SSO platform operated by an implementing organization. Your app remains responsible for permissions and business workflow. The organization provides the Issuer URL, Client ID and Client Secret for your application's approved registration.
 
 ```text
 Browser           Next.js backend                 EarthID
@@ -59,19 +59,19 @@ The deployment may use additional approval, IP allowlisting, policies or identit
 
 ## 4. Obtain the correct issuer
 
-For the DBKK deployment, earlier integration material identifies this **temporary/provisional** issuer:
+For illustration only, an organization might use the following **placeholder** issuer URL. The actual Issuer URL (which may include a path) must be supplied by the organization implementing EarthID Enterprise:
 
 ```text
-https://idp.dbkk.my/api/earthid
+https://earthid.organization-domain.com
 ```
 
 Check its discovery URL:
 
 ```bash
-curl -fsS https://idp.dbkk.my/api/earthid/.well-known/openid-configuration
+curl -fsS https://earthid.organization-domain.com/.well-known/openid-configuration
 ```
 
-The document's `issuer` property **must exactly match** the value given to your application administrator. This public guide is not evidence that the endpoint is currently online or that your client is enabled. Do not use a planned future domain until the deployment owner announces cutover.
+The discovery document's `issuer` property **must exactly match** the Issuer URL supplied by the implementing organization. The sample hostname is not a real endpoint or evidence that your client is enabled. Do not construct or assume the Issuer URL from the placeholder host.
 
 Use discovery for `authorization_endpoint`, `token_endpoint`, `jwks_uri` and `end_session_endpoint`. Avoid manually composing them in client code.
 
@@ -90,7 +90,7 @@ On Windows PowerShell, copy the file using `Copy-Item .env.example .env.local`.
 Edit **only your local** `.env.local`:
 
 ```dotenv
-EARTHID_ISSUER=https://idp.dbkk.my/api/earthid
+EARTHID_ISSUER=https://earthid.organization-domain.com
 EARTHID_CLIENT_ID=your-approved-client-id
 EARTHID_CLIENT_SECRET=your-private-client-secret
 NEXTAUTH_URL=http://localhost:3000
