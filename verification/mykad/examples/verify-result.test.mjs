@@ -66,7 +66,7 @@ test("rejects token replay", async () => {
   const token = await makeToken();
   await verifyMyKadResult({ ...opts, resultToken: token });
   await assert.rejects(
-    () => verifyMyKadResult({ ...opts, resultToken: token }),
+    async () => verifyMyKadResult({ ...opts, resultToken: token }),
     /token_replay_detected/
   );
 });
@@ -82,7 +82,7 @@ test("rejects wrong state", async () => {
 test("rejects missing successful verification", async () => {
   const { makeToken, opts } = await fixture();
   await assert.rejects(
-    () => verifyMyKadResult({ ...opts, resultToken: await makeToken({ verified: false }) }),
+    async () => verifyMyKadResult({ ...opts, resultToken: await makeToken({ verified: false }) }),
     /verification_not_successful/
   );
 });
@@ -99,10 +99,10 @@ test("rejects wrong token issuer or audience", async () => {
   const { makeToken, opts } = await fixture();
   const token = await makeToken();
   await assert.rejects(
-    () => verifyMyKadResult({ ...opts, resultToken: token, issuer: "https://different.organization-domain.com" }),
+    async () => verifyMyKadResult({ ...opts, resultToken: token, issuer: "https://different.organization-domain.com" }),
   );
   await assert.rejects(
-    () => verifyMyKadResult({ ...opts, resultToken: token, clientId: "some-other-client" }),
+    async () => verifyMyKadResult({ ...opts, resultToken: token, clientId: "some-other-client" }),
   );
 });
 
