@@ -74,7 +74,7 @@ test("rejects token replay", async () => {
 test("rejects wrong state", async () => {
   const { makeToken, opts } = await fixture();
   await assert.rejects(
-    () => verifyMyKadResult({ ...opts, resultToken: await makeToken(), expectedState: "different-state-1234567890" }),
+    async () => verifyMyKadResult({ ...opts, resultToken: await makeToken(), expectedState: "different-state-1234567890" }),
     /state_mismatch/
   );
 });
@@ -90,7 +90,7 @@ test("rejects missing successful verification", async () => {
 test("rejects different verified NRIC when a local comparison is required", async () => {
   const { makeToken, opts } = await fixture();
   await assert.rejects(
-    () => verifyMyKadResult({ ...opts, resultToken: await makeToken(), expectedNric: "990101010000" }),
+    async () => verifyMyKadResult({ ...opts, resultToken: await makeToken(), expectedNric: "990101010000" }),
     /nric_mismatch/
   );
 });
@@ -110,7 +110,7 @@ test("rejects invalid signature", async () => {
   const { makeToken, opts } = await fixture();
   const { publicKey: wrongPublicKey } = await generateKeyPair("RS256");
   await assert.rejects(
-    () => verifyMyKadResult({ ...opts, resultToken: await makeToken(), keySet: wrongPublicKey }),
+    async () => verifyMyKadResult({ ...opts, resultToken: await makeToken(), keySet: wrongPublicKey }),
   );
 });
 
