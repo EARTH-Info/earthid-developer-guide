@@ -18,21 +18,21 @@ No. The public developer guide describes an enterprise IAM product intended for 
 
 The **organization implementing EarthID Enterprise**. The Issuer URL and Client ID identify your configured deployment and application. A **Client Secret is supplied privately only for a registered confidential (backend) client**. A browser-only SPA is a *public* client and **must not have a Client Secret**.
 
-### 4. Can I use \`https://earthid.organization-domain.com\` directly?
+### 4. Can I use `https://earthid.organization-domain.com` directly?
 
 No. That hostname is **fictional**. The real Issuer URL may contain an additional path. Your organization must provide the exact value, registered callbacks and approved scopes.
 
 ### 5. Does the user need an EarthID login and then a second login to my system?
 
-**No for a properly linked existing user.** Your app validates the EarthID OIDC callback, resolves \`(issuer, sub)\` to its own \`local_user_id\`, checks local status and creates its app session. The user is signed in **without entering the application's password again**. The exception is a controlled **one-time linking step** for an unlinked existing account.
+**No for a properly linked existing user.** Your app validates the EarthID OIDC callback, resolves `(issuer, sub)` to its own `local_user_id`, checks local status and creates its app session. The user is signed in **without entering the application's password again**. The exception is a controlled **one-time linking step** for an unlinked existing account.
 
-### 6. My system already has a \`users\` table. Must I delete it?
+### 6. My system already has a `users` table. Must I delete it?
 
-**No.** Keep local user IDs, roles, account state, licence/application records and your business authorization logic. Add a unique external-identity mapping for \`(issuer, sub)\`. EarthID is not a drop-in replacement for your application database.
+**No.** Keep local user IDs, roles, account state, licence/application records and your business authorization logic. Add a unique external-identity mapping for `(issuer, sub)`. EarthID is not a drop-in replacement for your application database.
 
-### 7. Is the EarthID \`sub\` the same as my local user ID or MyKad?
+### 7. Is the EarthID `sub` the same as my local user ID or MyKad?
 
-**No assumption is valid.** In OIDC, \`sub\` is an opaque subject identifier scoped to the issuer. Store \`issuer + sub\` separately from your internal ID. Do not treat it as NRIC, email, a staff number or a universal person identifier.
+**No assumption is valid.** In OIDC, `sub` is an opaque subject identifier scoped to the issuer. Store `issuer + sub` separately from your internal ID. Do not treat it as NRIC, email, a staff number or a universal person identifier.
 
 ### 8. How do I link a first-time EarthID user to an existing local user?
 
@@ -54,7 +54,7 @@ Require **proof of control of the existing account** or an **administrator-appro
 
 ### 12. Can EarthID handle roles and access policies?
 
-**Potentially, yes.** EarthID Enterprise includes identity governance and may provide centralized groups, roles and application access policies. **These are not automatically equivalent** to your system's \`licence.approve\`, \`payment.refund\` or record-level access. Centralized delegation requires a documented, trustworthy claim/policy contract and enforcement in the business application.
+**Potentially, yes.** EarthID Enterprise includes identity governance and may provide centralized groups, roles and application access policies. **These are not automatically equivalent** to your system's `licence.approve`, `payment.refund` or record-level access. Centralized delegation requires a documented, trustworthy claim/policy contract and enforcement in the business application.
 
 ### 13. What if EarthID says authentication succeeded but the local user is disabled?
 
@@ -76,7 +76,7 @@ Require **proof of control of the existing account** or an **administrator-appro
 
 ### 17. Does an EarthID account or local user ID expire like MyDigital ID sessions?
 
-Do not confuse an **account identifier** with a **session/token**. A local user ID and saved \`issuer + sub\` link are durable records until revoked or migrated. EarthID SSO browser sessions, authorization codes, ID/access tokens and local app sessions **have different lifetimes**. Ask the operator for the actual token and SSO timeouts; don't invent universal durations.
+Do not confuse an **account identifier** with a **session/token**. A local user ID and saved `issuer + sub` link are durable records until revoked or migrated. EarthID SSO browser sessions, authorization codes, ID/access tokens and local app sessions **have different lifetimes**. Ask the operator for the actual token and SSO timeouts; don't invent universal durations.
 
 ### 18. If my app session expires, must the user log in manually again?
 
@@ -88,7 +88,7 @@ Your app should start a new OIDC authorization flow. If the EarthID SSO session 
 
 ### 20. How do I handle a bookmarked protected URL?
 
-Save a **safe relative return path**, start EarthID login as required, validate callback and mapping, then redirect to the requested authorized route. Do not permit external return URLs, and don't use a user-supplied \`returnTo\` to create an open redirect.
+Save a **safe relative return path**, start EarthID login as required, validate callback and mapping, then redirect to the requested authorized route. Do not permit external return URLs, and don't use a user-supplied `returnTo` to create an open redirect.
 
 ## MyDigital ID and application scenarios
 
@@ -120,10 +120,33 @@ It provides a [vendor deployment-readiness template](vendor-readiness.md). Actua
 
 **No.** You must prove successful callback validation, mapped and unmapped users, user status/permissions, denial of unauthorized records, safe return URLs, session expiry, logout behavior, secret handling and operational rollback.
 
+## Linked EarthID Account in User Profile
+
+### 28. Should an existing application show which EarthID account is linked?
+
+**Yes, as a recommended best practice.** Add a **Linked EarthID Account** section under the application's existing **User Profile / Account Settings** page. Show **Linked / Not linked** status, provider name, a masked account hint if available, and the link date if the application recorded it. Do **not** expose a raw token, Client Secret or sensitive identity data. See the [profile and linking management guide](linked-account-profile.md).
+
+### 29. Should users be able to Associate, Re-associate or Unlink an EarthID identity themselves?
+
+**Only under a controlled security policy.** Associate requires proof that the person controls the **current local account** and a newly validated EarthID authentication result. Re-association requires additional safeguards: strong local account proof, authenticated new EarthID identity, uniqueness checks, confirmation, atomic replacement and audit. Unlink must be blocked when it would remove the user's only safe sign-in/recovery method, unless an approved assisted process exists. Privileged accounts may require administrative approval.
+
+### 30. Does Re-associate change the user's local user ID, role or business records?
+
+**No.** It changes which verified external **(issuer, sub)** maps to the same **local user ID**. App roles, existing business records and audit history remain managed by the application. A changed link must not silently grant extra privileges.
+
+### 31. Can the application match and link by email alone?
+
+**No.** Email is only a **display hint**, if granted by the IdP. It can be absent, changed or shared. The secure identity key is **(issuer, sub)** from a validated OIDC response, linked only after the user proves control of the local account or an administrator approves it.
+
+### 32. If I unlink EarthID, am I logged out everywhere or is my local account deleted?
+
+**Neither is automatic.** An unlink operation removes the **application's external identity mapping**. It does not delete the local account, its data or existing business audit records, and it is not global EarthID logout. Define app-session revocation explicitly. **Do not allow an EarthID-only user to self-unlink without an alternative approved sign-in/recovery path.**
+
 ## Quick reference
 
 | What you want | Use |
 | --- | --- |
+| Let users view and manage their linked EarthID identity | [Linked EarthID Account profile UX](linked-account-profile.md) |
 | Let an existing staff user sign in once and keep local roles | [Existing-app SSO](existing-app-sso.md) |
 | Decide who authenticates and who authorizes | [AuthN vs AuthZ](authentication-vs-authorization.md) |
 | Review recommended secure practices | [Best practices](best-practices.md) |

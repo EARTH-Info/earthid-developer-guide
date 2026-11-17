@@ -32,6 +32,19 @@ Choose one **controlled** approach based on the system's risk:
 
 **If the old system has no usable local credentials**, an administrator-reviewed account linking process is safer than guessing based on matching personal attributes. “One-time linking” is a business decision and implementation step, **not a feature that OIDC performs automatically**.
 
+### Let users see and manage their existing association
+
+**Recommended for legacy integration:** add a clearly labeled **Linked EarthID Account** section to the local user's **Profile / Account Settings** page. The section should show:
+
+- **Status:** Linked / Not linked / Pending review;
+- **Provider:** EarthID Enterprise;
+- **Linked identity:** a masked display hint when an approved claim is available;
+- **Actions:** Associate, Re-associate, and/or Unlink **only where server-side security/recovery policy permits**.
+
+This reduces confusion about which EarthID account signs into which local user. **Re-association requires both local-account ownership proof and verified authentication of the new EarthID identity.** Do not expose unrestricted self-service unlink if EarthID is the user's only sign-in method.
+
+See the [user-facing account linking management guide](linked-account-profile.md) for the UI, callback flow, re-link safety and acceptance tests.
+
 ## 2. End-to-end login sequences
 
 ### A. Returning user: automatic sign-in to the local application
@@ -181,4 +194,4 @@ A vendor has **not finished integration** just because the EarthID login page ap
 - Local logout and SSO-wide logout behavior separately documented and tested.
 - Old application and privileged fallback paths tested against regressions.
 
-See the [fictionalized licensing portal case study](../case-studies/legacy-licensing-portal.md) and [vendor delivery checklist](vendor-readiness.md).
+See the [Linked Account profile UX guide](linked-account-profile.md), [fictionalized licensing portal case study](../case-studies/legacy-licensing-portal.md) and [vendor delivery checklist](vendor-readiness.md).

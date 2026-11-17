@@ -36,15 +36,15 @@ The operator must issue the correct registration and configure supported endpoin
 
 ## 3. Validate every authentication response
 
-- Verify OIDC \`state\`, \`nonce\`, exact \`issuer\` and \`audience\`, signed ID token, expiry, PKCE and redirect URI through a well-supported OIDC library.
+- Verify OIDC `state`, `nonce`, exact `issuer` and `audience`, signed ID token, expiry, PKCE and redirect URI through a well-supported OIDC library.
 - Use the organization's actual issuer from discovery; **do not guess endpoints** based on a hostname, or copy another client's issuer.
 - Do not implement identity by base64-decoding a JWT and trusting the JSON; that is not signature verification.
 - Reject missing/malformed claims; never substitute a default local administrator or “test user” on failure.
-- Keep scopes minimal (\`openid\` and approved additional scopes only). Don't assume optional NRIC, phone, staff number, roles or MyDigital ID proof claims exist.
+- Keep scopes minimal (`openid` and approved additional scopes only). Don't assume optional NRIC, phone, staff number, roles or MyDigital ID proof claims exist.
 
 ## 4. Map external users once, securely
 
-- Resolve external identity using the pair **\`(issuer, sub)\`**, not email, NRIC, name, phone or the first matching row.
+- Resolve external identity using the pair **`(issuer, sub)`**, not email, NRIC, name, phone or the first matching row.
 - Keep a unique constraint for the external identity; write linked/unlinked/relinked changes to a protected audit trail.
 - If existing local user is **already linked and active**, issue a local app session automatically—**no extra password**.
 - If **not linked**, perform one-time verified account control or administrator-approved mapping; deny privileged access until linking is approved.
@@ -52,11 +52,19 @@ The operator must issue the correct registration and configure supported endpoin
 - Never assign “admin,” “officer,” “approver” or another privileged role simply because OIDC authentication succeeded.
 - Recheck disabled/revoked status when issuing an app session and whenever app policy or risk requires.
 
+### Give users a visible linked-account profile
+
+For an existing or legacy application, add a **Linked EarthID Account** area to **User Profile / Account Settings** with the current link status and a safe display hint (for example a masked linked email, if supplied). Consider protected **Associate**, **Re-associate** and **Unlink** actions.
+
+**Security gate:** a self-service **Unlink** operation must not remove the user's **only** working sign-in method. Re-association requires strong proof of control of the local account and authentication of the new EarthID identity; do not delete the old link before the replacement succeeds. Privileged accounts may require administrator approval. Link status and available buttons must be calculated server-side, and every mutation must be authorized, CSRF-protected and audited.
+
+See the full **[Linked EarthID Account User Profile UX and implementation guide](linked-account-profile.md)**, including a safe sample layout, state model, workflow diagrams, local API pattern and UAT.
+
 ## 5. Enforce authorization where the data lives
 
 **All sensitive business access must be enforced by the backend or protected resource API.** Examples:
 
-\`\`\`text
+```text
 POST /api/licences/123/approve
   - Is the application session or API token valid?
   - Which active local user is linked to this identity?
@@ -66,9 +74,9 @@ POST /api/licences/123/approve
   - Is separation of duties satisfied, if required?
   - If all pass: commit transaction and audit who approved
   - Otherwise: deny without changing data
-\`\`\`
+```
 
-**Do not** trust a frontend-only role check, hidden button, localStorage role value, a browser-supplied \`local_user_id\`, or unchecked role data from a token. Protect direct URL access, object-level IDs and API mutations. Apply least privilege and deny by default.
+**Do not** trust a frontend-only role check, hidden button, localStorage role value, a browser-supplied `local_user_id`, or unchecked role data from a token. Protect direct URL access, object-level IDs and API mutations. Apply least privilege and deny by default.
 
 ### If the organization wants centralized roles in EarthID
 
@@ -87,7 +95,7 @@ Central groups/application eligibility can be useful, **but only with an explici
 - EarthID's **SSO browser session** is not the application's **session cookie**.
 - The **ID token** identifies the authenticated user to the OIDC client. An **access token** has its own intended API audience/scope.
 - The application maintains its own session ID/cookie (HttpOnly, Secure over HTTPS, SameSite appropriate to the flow) or protected server-side ticket; regenerate session ID after login and enforce expiry.
-- A saved external identity mapping and internal \`local_user_id\` normally **do not expire when access tokens expire**.
+- A saved external identity mapping and internal `local_user_id` normally **do not expire when access tokens expire**.
 - Store Client Secrets in a server-side vault/secret manager, never in source code, JS bundles, screenshots or public issues.
 - Avoid persisting bearer tokens in browser localStorage for sensitive apps; a backend-for-frontend with server-managed sessions is preferable when the app handles high-risk data.
 - Recheck authorization for operations and apply session revocation/short-lived permissions where needed.
@@ -105,7 +113,7 @@ Central groups/application eligibility can be useful, **but only with an explici
 The [MyKad Verification API](../verification/mykad/README.md) can verify a person's identity for an isolated transaction **without an app account**. It is not an OIDC staff login.
 
 - The person still completes an approved MyDigital ID authentication challenge.
-- Validate the **signed \`result_token\`** (signature, issuer, audience, expiry, state, one-time \`jti\`, and \`verified === true\`).
+- Validate the **signed `result_token`** (signature, issuer, audience, expiry, state, one-time `jti`, and `verified === true`).
 - Treat the returned verified NRIC as **identity evidence**, not proof of property ownership, licence entitlement or company authority.
 - Bind it to the intended transaction and expire any app-issued verified context.
 - Never accept a client-submitted NRIC or an unvalidated result token as authorization.
@@ -123,7 +131,7 @@ The [MyKad Verification API](../verification/mykad/README.md) can verify a perso
 
 | ID | Test | Must pass |
 | --- | --- | --- |
-| BP-01 | Mapped existing user logs in via EarthID | Correct internal \`user_id\`, **no second password** |
+| BP-01 | Mapped existing user logs in via EarthID | Correct internal `user_id`, **no second password** |
 | BP-02 | First-time unlinked user | Controlled link/invitation/admin approval; no automatic privileged access |
 | BP-03 | Disabled local account | Valid EarthID login still results in **access denied** |
 | BP-04 | User with insufficient role | Business API denies approval/mutation |
@@ -156,4 +164,5 @@ Don't publish customer deployment specifications, internal topology, secrets or 
 - [Authentication vs Authorization](authentication-vs-authorization.md)
 - [Developer FAQ](FAQ.md)
 - [Existing-application SSO and local-user linking](existing-app-sso.md)
+- [Linked EarthID Account in User Profile](linked-account-profile.md)
 - [Fictional legacy licensing portal case study](../case-studies/legacy-licensing-portal.md)

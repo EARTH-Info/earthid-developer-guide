@@ -10,7 +10,7 @@ EarthID Enterprise provides identity authentication and single sign-on. Your app
 
 **Who authorizes business actions?** **Your application/backend** is responsible for permission checks, local roles, active user status and record-level business rules. The organization can optionally govern application eligibility or defined groups/roles centrally through EarthID, **but only under a documented integration policy**; a successful EarthID login alone is never unrestricted business access.
 
-**How does an existing local user ID work?** After secure one-time linking of **\`(issuer, sub)\` to \`local_user_id\`**, returning users sign in through EarthID without another local password. Their local account remains the source of their application permissions.
+**How does an existing local user ID work?** After secure one-time linking of **`(issuer, sub)` to `local_user_id`**, returning users sign in through EarthID without another local password. Their local account remains the source of their application permissions.
 
 - **[Authentication vs Authorization — roles and responsibility matrix](guides/authentication-vs-authorization.md)**
 - **[Developer FAQ — login twice? local user ID? token expiry? roles? MyDigital ID?](guides/FAQ.md)**
@@ -31,6 +31,7 @@ EarthID Enterprise provides identity authentication and single sign-on. Your app
 
 If an existing account has not been linked yet, require a **controlled one-time linking or administrator approval**. Never automatically link a privileged user just because an email or MyKad number appears to match.
 
+- **[User Profile: show and manage the linked EarthID account](guides/linked-account-profile.md)** — recommended profile section with link status, Associate / Re-associate / Unlink, security policy and UAT.
 - **[Step-by-step guide: preserve local users and add SSO](guides/existing-app-sso.md)** — first login, subsequent logins, account mapping, logout and session expiry.
 - **[Case study: upgrading an existing licensing/permit application](case-studies/legacy-licensing-portal.md)** — realistic staff/applicant journeys, renewal, local roles, account linking and failure scenarios.
 - **[Vendor integration and deployment readiness checklist](guides/vendor-readiness.md)** — questions to ask, operator-provided credentials, existing-user migration, UAT and handover.

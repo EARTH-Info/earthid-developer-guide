@@ -60,6 +60,20 @@ EarthID establishes **who authenticated**. The application establishes **which e
 
 **Result:** No additional app password; the user keeps their existing permissions, work history and data links. The application logs the action against its existing local user ID.
 
+## User Profile — visible associated identity
+
+For a legacy application, **a successful association should be visible to the person using the existing local account**. Add a profile section, for example:
+
+```text
+Local Account: #246 — Licensing Officer
+Linked EarthID Account
+  Status: Linked
+  Linked Identity: e***@organization-domain.com
+  [Re-associate]  [Unlink — only if recovery policy permits]
+```
+
+This is **an application-owned feature**, not an EarthID remote account-management API. The application stores the verified `issuer + sub` link to its existing user ID; link/relink/unlink changes must be authorized, protected from account takeover and audited. For an app using EarthID as its **only** login method, normally disable unguarded self-service Unlink to prevent lockout. See [linked-account profile best practices](../guides/linked-account-profile.md).
+
 ## Scenario 2 — first-time EarthID sign-in, existing local account
 
 There is an EarthID identity but no matching local mapping. The user must **not** be silently mapped based only on a similar email, display name or NRIC.
