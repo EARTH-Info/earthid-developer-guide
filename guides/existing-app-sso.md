@@ -6,6 +6,12 @@
 
 Before changing your application's login flow, read [Authentication vs Authorization](authentication-vs-authorization.md), [Best Practices](best-practices.md) and the [FAQ](FAQ.md). In short, EarthID handles user authentication, while your application handles local identity mapping and business authorization. Central access-governance roles may be delegated under an explicit contract, but they do not automatically replace local record-level permissions.
 
+## At a glance
+
+![Existing-application authentication and authorization diagram](../assets/earthid-enterprise-existing-applications.svg)
+
+For linked-account management on an existing profile, see [the secure association diagram](../assets/earthid-linked-account-flow.svg).
+
 ## 1. Answer the question: after EarthID login, must the user log in again?
 
 **No, not as the normal experience.** After a successful EarthID callback, your application must:

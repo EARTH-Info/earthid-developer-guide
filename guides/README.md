@@ -2,6 +2,13 @@
 
 Framework starters answer **how to initiate OIDC login**. These guides explain **how to integrate identity into a real application** that already has users, roles, legacy authentication and a deployment process.
 
+## Visual architecture
+
+![EarthID Enterprise architecture for an existing application](../assets/earthid-enterprise-existing-applications.svg)
+
+- [Authentication, Local User Mapping and Authorization infographic](../assets/earthid-enterprise-existing-applications.svg)
+- [Linked EarthID Account — secure association flow](../assets/earthid-linked-account-flow.svg)
+
 ## Essential concepts before writing code
 
 - **[Linked EarthID Account profile UX](linked-account-profile.md)** — let users see and safely manage the link to their local account.

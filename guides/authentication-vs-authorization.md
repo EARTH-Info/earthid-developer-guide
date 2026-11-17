@@ -2,6 +2,10 @@
 
 **Read this before integrating SSO into an existing system.** Most implementation mistakes happen because developers confuse **identity authentication**, **local account mapping**, **application authorization**, and **identity verification**.
 
+## Architecture infographic
+
+![EarthID Enterprise Authentication vs Application Authorization](../assets/earthid-enterprise-existing-applications.svg)
+
 ## 1. The short answer: who does what?
 
 - **Authentication (AuthN):** The **organization's EarthID Enterprise deployment** authenticates the person, using the configured login methods. Your application is the OIDC relying party: it **must validate the authentication response** before treating anyone as signed in.

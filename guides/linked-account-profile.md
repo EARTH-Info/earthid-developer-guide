@@ -8,6 +8,12 @@
 
 No real organization, customer identity, profile screenshot, email address or deployment detail is reproduced in this public guide.
 
+## Visual guide: Linked EarthID Account flow
+
+![How to associate an EarthID Enterprise identity with a local user account](../assets/earthid-linked-account-flow.svg)
+
+The illustration shows the recommended user journey and security gates. The **vendor application**, not a generic EarthID remote account-linking endpoint, stores and manages the local identity mapping.
+
 ## 1. Why this UI matters
 
 After legacy SSO migration, people otherwise cannot answer:

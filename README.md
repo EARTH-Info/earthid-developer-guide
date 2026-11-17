@@ -4,6 +4,14 @@ Public integration documentation for software vendors building applications that
 
 EarthID Enterprise provides identity authentication and single sign-on. Your application redirects users to your organization's EarthID Enterprise service, handles the verified OIDC response, and remains responsible for application-specific permissions and business workflows.
 
+## Visual Integration Diagrams
+
+![EarthID Enterprise Authentication, Local User Mapping and Authorization](assets/earthid-enterprise-existing-applications.svg)
+
+**[View full-size Authentication vs Authorization infographic](assets/earthid-enterprise-existing-applications.svg)** · **[View Linked EarthID Account Flow diagram](assets/earthid-linked-account-flow.svg)**
+
+These are vendor-neutral SVG illustrations. EarthID authenticates the user; the application resolves its own local user and enforces business authorization. Linked-account actions must use a secured application-controlled process.
+
 ## Start here: Authentication vs Authorization
 
 **Who authenticates the user?** **EarthID Enterprise**, operated and configured by the implementing organization. Your application validates the OIDC response and establishes its own app session.
