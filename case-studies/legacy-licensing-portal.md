@@ -2,6 +2,8 @@
 
 **Illustrative scenario only.** This is a fictional, vendor-neutral reference case for an older permitting/licensing system. It is **not** a description or endorsement of any named customer's deployment.
 
+**Principle:** EarthID Enterprise authenticates. The application retains its local user mapping and **enforces business authorization**. See [AuthN vs AuthZ](../guides/authentication-vs-authorization.md), [Best Practices](../guides/best-practices.md) and the [FAQ](../guides/FAQ.md).
+
 ## The starting position
 
 A software vendor maintains a licensing application used by agency staff and applicants. The application is several years old and may run on a legacy web stack. It already has:

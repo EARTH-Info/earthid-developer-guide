@@ -1,5 +1,7 @@
 # Integrate EarthID Enterprise with ASP.NET Core
 
+> **Architecture first:** [Who handles Authentication vs Authorization?](../guides/authentication-vs-authorization.md) · [Best Practices](../guides/best-practices.md) · [Developer FAQ](../guides/FAQ.md). An EarthID login proves authentication; the application must still enforce local account and business permission checks.
+
 **Audience:** vendor developers building server-rendered ASP.NET Core web applications.
 
 

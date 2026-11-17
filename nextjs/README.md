@@ -1,5 +1,7 @@
 # Integrate EarthID Enterprise with Next.js
 
+> **Architecture first:** [Who handles Authentication vs Authorization?](../guides/authentication-vs-authorization.md) · [Best Practices](../guides/best-practices.md) · [Developer FAQ](../guides/FAQ.md). An EarthID login proves authentication; the application must still enforce local account and business permission checks.
+
 **Audience:** vendor developers who have never used EarthID Enterprise.
 
 **Outcome:** run a Next.js application with EarthID sign-in, a protected server page and local sign-out using a registered OIDC confidential client.

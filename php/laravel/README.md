@@ -1,5 +1,7 @@
 # Laravel integration with EarthID Enterprise
 
+> **Architecture first:** [Who handles Authentication vs Authorization?](../../guides/authentication-vs-authorization.md) · [Best Practices](../../guides/best-practices.md) · [Developer FAQ](../../guides/FAQ.md). An EarthID login proves authentication; the application must still enforce local account and business permission checks.
+
 **Who this is for:** vendors with an existing Laravel application who want to add EarthID Enterprise sign-in. This reference supports PHP 8.3+ and a Laravel application with standard web routes and session middleware.
 
 The [standalone PHP starter](../starter/) is runnable without Laravel. **Do not paste its native-PHP session handling into Laravel**. Laravel has its own session, HTTP, caching and CSRF middleware.

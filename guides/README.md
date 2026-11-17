@@ -2,10 +2,19 @@
 
 Framework starters answer **how to initiate OIDC login**. These guides explain **how to integrate identity into a real application** that already has users, roles, legacy authentication and a deployment process.
 
+## Essential concepts before writing code
+
+- **[Authentication vs Authorization](authentication-vs-authorization.md)** — who verifies identity, who manages application accounts, and who decides business permissions.
+- **[Best Practices](best-practices.md)** — secure OIDC callback, local user linking, RBAC, API checks, session expiry and UAT.
+- **[Frequently Asked Questions](FAQ.md)** — direct answers to common vendor integration questions, including first login and subsequent login.
+
 ## Start with your situation
 
 | Your situation | Read |
 | --- | --- |
+| I want to know who handles authentication vs authorization | [AuthN / AuthZ responsibility matrix](authentication-vs-authorization.md) |
+| I'm unsure whether users must log in twice or whether their user ID expires | [Developer FAQ](FAQ.md) |
+| I want secure production implementation guidance | [Integration best practices](best-practices.md) |
 | My existing application already has its own users, passwords and roles | [Keep your local user system and integrate SSO](existing-app-sso.md) |
 | I'm adapting an existing permit/licensing service and want to understand a real user journey | [Fictionalized legacy licensing portal case study](../case-studies/legacy-licensing-portal.md) |
 | I must submit deployment/readiness information or plan UAT | [Vendor onboarding, deployment and UAT handover](vendor-readiness.md) |

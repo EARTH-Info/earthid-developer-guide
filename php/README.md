@@ -1,5 +1,7 @@
 # EarthID Enterprise — PHP developer guide
 
+> **Architecture first:** [Who handles Authentication vs Authorization?](../guides/authentication-vs-authorization.md) · [Best Practices](../guides/best-practices.md) · [Developer FAQ](../guides/FAQ.md). An EarthID login proves authentication; the application must still enforce local account and business permission checks.
+
 **Target:** external vendors integrating a PHP application with an organization's EarthID Enterprise deployment. This guide assumes no previous knowledge of EarthID.
 
 > **Already have a local user database?** EarthID authenticates; your application continues managing local user IDs, business roles and permissions. Read the [existing-system account linking guide](../guides/existing-app-sso.md) and [fictionalized legacy licensing case study](../case-studies/legacy-licensing-portal.md). Returning mapped users should **not** be asked for a second application login.

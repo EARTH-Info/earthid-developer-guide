@@ -4,6 +4,18 @@ Public integration documentation for software vendors building applications that
 
 EarthID Enterprise provides identity authentication and single sign-on. Your application redirects users to your organization's EarthID Enterprise service, handles the verified OIDC response, and remains responsible for application-specific permissions and business workflows.
 
+## Start here: Authentication vs Authorization
+
+**Who authenticates the user?** **EarthID Enterprise**, operated and configured by the implementing organization. Your application validates the OIDC response and establishes its own app session.
+
+**Who authorizes business actions?** **Your application/backend** is responsible for permission checks, local roles, active user status and record-level business rules. The organization can optionally govern application eligibility or defined groups/roles centrally through EarthID, **but only under a documented integration policy**; a successful EarthID login alone is never unrestricted business access.
+
+**How does an existing local user ID work?** After secure one-time linking of **\`(issuer, sub)\` to \`local_user_id\`**, returning users sign in through EarthID without another local password. Their local account remains the source of their application permissions.
+
+- **[Authentication vs Authorization — roles and responsibility matrix](guides/authentication-vs-authorization.md)**
+- **[Developer FAQ — login twice? local user ID? token expiry? roles? MyDigital ID?](guides/FAQ.md)**
+- **[Integration and security best practices — practical checks and UAT](guides/best-practices.md)**
+
 ## Choose your platform
 
 | Platform | Integration guide | Example application |

@@ -4,6 +4,8 @@
 
 **Scope:** EarthID SSO integration and preservation of application user management. It is **not** an infrastructure sizing prescription, firewall approval, penetration test report or official deployment acceptance form. Obtain actual hosting requirements and the organization's own templates from the receiving operations team.
 
+**Before coding:** agree who owns each permission and which system enforces it. Use the [AuthN vs AuthZ responsibility matrix](authentication-vs-authorization.md), [Best Practices](best-practices.md) and [FAQ](FAQ.md).
+
 ## 1. Identify the application's starting condition
 
 Before requesting credentials, answer:
