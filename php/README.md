@@ -2,6 +2,8 @@
 
 **Target:** external vendors integrating a PHP application with an organization's EarthID Enterprise deployment. This guide assumes no previous knowledge of EarthID.
 
+> **Already have a local user database?** EarthID authenticates; your application continues managing local user IDs, business roles and permissions. Read the [existing-system account linking guide](../guides/existing-app-sso.md) and [fictionalized legacy licensing case study](../case-studies/legacy-licensing-portal.md). Returning mapped users should **not** be asked for a second application login.
+
 ## Choose your PHP application type
 
 | Type | Guide | Deliverable |

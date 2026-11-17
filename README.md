@@ -13,6 +13,18 @@ EarthID Enterprise provides identity authentication and single sign-on. Your app
 | **PHP 8.3+** | [PHP guide](php/README.md) | [Plain PHP starter](php/starter/) · [Laravel reference](php/laravel/) |
 | **Browser-only SPA (React, Vue, Angular, plain JS)** | [SPA public-client guide](spa/README.md) | [Vite + TypeScript starter](spa/starter/) |
 
+## Integrating an existing application (no second login)
+
+**Already have local user IDs, staff roles, permissions and business records?** EarthID Enterprise authenticates the user; **your application still owns its local accounts and authorization**. After a verified one-time association of `(issuer, sub)` with an existing `local_user_id`, returning users enter the application through EarthID **without another application password prompt**.
+
+If an existing account has not been linked yet, require a **controlled one-time linking or administrator approval**. Never automatically link a privileged user just because an email or MyKad number appears to match.
+
+- **[Step-by-step guide: preserve local users and add SSO](guides/existing-app-sso.md)** — first login, subsequent logins, account mapping, logout and session expiry.
+- **[Case study: upgrading an existing licensing/permit application](case-studies/legacy-licensing-portal.md)** — realistic staff/applicant journeys, renewal, local roles, account linking and failure scenarios.
+- **[Vendor integration and deployment readiness checklist](guides/vendor-readiness.md)** — questions to ask, operator-provided credentials, existing-user migration, UAT and handover.
+
+See also the [developer integration journeys index](guides/README.md) to select the correct approach for your application.
+
 ## Identity verification without app sign-up or login
 
 **[MyKad Verification via MyDigital ID](verification/mykad/README.md)** — a separate EarthID Enterprise capability for verifying an individual's MyKad identity during a one-time transaction **without creating an account or logging in to the client application**. The person completes a MyDigital ID challenge; EarthID redirects a signed `result_token` to your registered callback. Your application validates the result using EarthID's public JWKS, then applies its own business rules.

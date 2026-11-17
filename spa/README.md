@@ -4,6 +4,8 @@ Use this guide when your application is a **static website or single-page applic
 
 Start with the [runnable Vite + TypeScript starter](starter/). It uses OIDC Authorization Code Flow with **PKCE S256**, browser-based token exchange, and **no Client Secret**.
 
+> **Already have a local user database?** EarthID authenticates; your application continues managing local user IDs, business roles and permissions. Read the [existing-system account linking guide](../guides/existing-app-sso.md) and [fictionalized legacy licensing case study](../case-studies/legacy-licensing-portal.md). Returning mapped users should **not** be asked for a second application login.
+
 ## 1. Understand public clients
 
 | | Browser-only SPA | Server-side app / backend-for-frontend |

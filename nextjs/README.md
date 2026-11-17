@@ -8,6 +8,8 @@
 - [Manual integration/UAT checks](UAT.md)
 - [Public repository security rules](../SECURITY.md)
 
+> **Already have a local user database?** EarthID authenticates; your application continues managing local user IDs, business roles and permissions. Read the [existing-system account linking guide](../guides/existing-app-sso.md) and [fictionalized legacy licensing case study](../case-studies/legacy-licensing-portal.md). Returning mapped users should **not** be asked for a second application login.
+
 ## 1. What is EarthID?
 
 EarthID Enterprise is an identity and SSO platform operated by an implementing organization. Your app remains responsible for permissions and business workflow. The organization provides the Issuer URL, Client ID and Client Secret for your application's approved registration.

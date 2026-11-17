@@ -14,6 +14,8 @@ An enterprise business application commonly needs three separate responsibilitie
 
 This public example implements **(1)** and a small demo session for **(2)**. It deliberately does **not** implement business entity registration, identification documents, account claiming, automatic NRIC/email matching or other customer-specific workflows. A successful login must never automatically create an organization, licence, business relationship or privileged account.
 
+> **Already have a local user database?** EarthID authenticates; your application continues managing local user IDs, business roles and permissions. Read the [existing-system account linking guide](../../guides/existing-app-sso.md) and [fictionalized legacy licensing case study](../../case-studies/legacy-licensing-portal.md). Returning mapped users should **not** be asked for a second application login.
+
 ## 1. Prerequisites and client onboarding
 
 Install PHP 8.3+, Laravel with the \`web\` middleware, and the actively maintained \`firebase/php-jwt\` library:

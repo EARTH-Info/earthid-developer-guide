@@ -7,6 +7,8 @@ This public starter uses a conventional browser redirect, a local authentication
 
 **Runtime:** ASP.NET Core **10.0 LTS** (the original sample used .NET 8). It uses the security-patched `Microsoft.AspNetCore.Authentication.OpenIdConnect` 10.0.15 package and a modern supported .NET SDK. **ASP.NET Framework MVC 5 is not covered by this ASP.NET Core example.**
 
+> **Already have a local user database?** EarthID authenticates; your application continues managing local user IDs, business roles and permissions. Read the [existing-system account linking guide](../guides/existing-app-sso.md) and [fictionalized legacy licensing case study](../case-studies/legacy-licensing-portal.md). Returning mapped users should **not** be asked for a second application login.
+
 ## 1. Understand EarthID Enterprise and your app
 
 - **EarthID Enterprise:** IAM / SSO platform.
