@@ -1,8 +1,8 @@
 # Vendor onboarding, integration readiness and deployment handover
 
-**Audience:** external developers who have an existing enterprise/agency application and want to integrate EarthID Enterprise before deployment. This generic checklist is suitable for an application built locally, an older/legacy codebase, or a new cloud-hosted application.
+**Audience:** external developers building a new application or integrating an existing enterprise/agency application with EarthID Enterprise before deployment. This generic checklist is suitable for an application built locally, an older/legacy codebase, or a new cloud-hosted application.
 
-**Scope:** EarthID SSO integration and preservation of application user management. It is **not** an infrastructure sizing prescription, firewall approval, penetration test report or official deployment acceptance form. Obtain actual hosting requirements and the organization's own templates from the receiving operations team.
+**Scope:** EarthID SSO integration, new-app provisioning choices, and preservation of existing local user management where relevant. It is **not** an infrastructure sizing prescription, firewall approval, penetration test report or official deployment acceptance form. Obtain actual hosting requirements and the organization's own templates from the receiving operations team.
 
 **Before coding:** agree who owns each permission and which system enforces it. Use the [AuthN vs AuthZ responsibility matrix](authentication-vs-authorization.md), [Best Practices](best-practices.md) and [FAQ](FAQ.md).
 
@@ -22,7 +22,7 @@ Before requesting credentials, answer:
 | Is an emergency local admin path necessary? | Controlled, audited and protected if retained |
 | What is the deadline or delivery gate? | UAT evidence, deployment checklist and approvals |
 
-For an existing local account system, read [account linking and one-login guidance](existing-app-sso.md) before modifying authentication logic.
+For a **new application**, read [new-app SSO and onboarding](new-application-sso.md) before implementing user creation. For an existing local account system, read [account linking and one-login guidance](existing-app-sso.md) before modifying authentication logic.
 
 ## 2. Information the EarthID operator must provide
 

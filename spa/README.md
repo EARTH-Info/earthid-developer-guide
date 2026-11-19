@@ -1,5 +1,7 @@
 # EarthID Enterprise — Browser-only SPA integration
 
+> **Building a new application?** Start with the [New Application SSO-First Guide](../guides/new-application-sso.md) to choose JIT applicants, preapproved staff, or an accountless approach. Your application still enforces business authorization.
+
 > **Architecture first:** [Who handles Authentication vs Authorization?](../guides/authentication-vs-authorization.md) · [Best Practices](../guides/best-practices.md) · [Developer FAQ](../guides/FAQ.md). An EarthID login proves authentication; the application must still enforce local account and business permission checks.
 
 Use this guide when your application is a **static website or single-page application** (React, Vue, Angular, or plain JavaScript) with **no server-side authentication backend**.

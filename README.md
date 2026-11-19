@@ -4,6 +4,18 @@ Public integration documentation for software vendors building applications that
 
 EarthID Enterprise provides identity authentication and single sign-on. Your application redirects users to your organization's EarthID Enterprise service, handles the verified OIDC response, and remains responsible for application-specific permissions and business workflows.
 
+## New Applications — SSO-First Design
+
+Building an application from scratch? **Use EarthID Enterprise for sign-in from day one.** Do not build another routine username/password login. Decide the application's onboarding and business authorization policy before coding:
+
+- **Public applicants:** minimal least-privilege user creation on first validated sign-in only if JIT provisioning is explicitly approved.
+- **Staff / administrators:** invite or preapprove; never infer an internal role solely from successful EarthID authentication.
+- **No ongoing application account needed:** consider the separate accountless MyKad Verification API instead of ordinary SSO.
+
+**[New Application Integration Guide](guides/new-application-sso.md)** · **[New Public Service Portal Case Study](case-studies/new-public-service-portal.md)** · **[Full-size New Application Architecture](assets/earthid-new-application-integration.svg)**
+
+![EarthID Enterprise New Application Integration](assets/earthid-new-application-integration.svg)
+
 ## Visual Integration Diagrams
 
 ![EarthID Enterprise Authentication, Local User Mapping and Authorization](assets/earthid-enterprise-existing-applications.svg)
@@ -123,4 +135,4 @@ For client provisioning, issuer details, scopes, test accounts or logout capabil
 
 The starters include build/syntax checks in [GitHub Actions](.github/workflows/ci.yml). These do **not** replace live OIDC integration tests, application authorization review, or the implementing organization's UAT approval.
 
-Last updated: 16 November 2026.
+Last updated: 19 November 2026.

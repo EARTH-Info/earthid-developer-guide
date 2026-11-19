@@ -1,5 +1,7 @@
 # Laravel integration with EarthID Enterprise
 
+> **Building a new application?** Start with the [New Application SSO-First Guide](../../guides/new-application-sso.md) to choose JIT applicants, preapproved staff, or an accountless approach. Your application still enforces business authorization.
+
 > **Architecture first:** [Who handles Authentication vs Authorization?](../../guides/authentication-vs-authorization.md) · [Best Practices](../../guides/best-practices.md) · [Developer FAQ](../../guides/FAQ.md). An EarthID login proves authentication; the application must still enforce local account and business permission checks.
 
 **Who this is for:** vendors with an existing Laravel application who want to add EarthID Enterprise sign-in. This reference supports PHP 8.3+ and a Laravel application with standard web routes and session middleware.

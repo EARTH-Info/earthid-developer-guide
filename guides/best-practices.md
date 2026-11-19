@@ -34,6 +34,18 @@ Document a **source-of-truth matrix** and agree it with the application owner an
 
 The operator must issue the correct registration and configure supported endpoints, callback(s), scopes and browser CORS where applicable.
 
+### New application best practices
+
+For **new** applications, avoid treating the legacy-account linking experience as mandatory:
+
+- Use EarthID for routine sign-in; do not create unnecessary local passwords.
+- Define **JIT applicant**, **invite-only staff**, and **accountless** policies as separate use cases.
+- Create local business profiles only as needed and with least privilege; protect first-time creation with unique `(issuer, sub)` constraints.
+- Never grant staff/admin roles solely because OIDC authentication succeeded.
+- Don't offer unrestricted Unlink when EarthID is the app's only sign-in method.
+
+Read [New Application Integration](new-application-sso.md) and [illustrative new portal case study](../case-studies/new-public-service-portal.md).
+
 ## 3. Validate every authentication response
 
 - Verify OIDC `state`, `nonce`, exact `issuer` and `audience`, signed ID token, expiry, PKCE and redirect URI through a well-supported OIDC library.

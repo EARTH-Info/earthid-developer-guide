@@ -1,6 +1,14 @@
 # EarthID Enterprise — Integration journeys and implementation decisions
 
-Framework starters answer **how to initiate OIDC login**. These guides explain **how to integrate identity into a real application** that already has users, roles, legacy authentication and a deployment process.
+Framework starters answer **how to initiate OIDC login**. These guides explain **how to design a new SSO-first application** or integrate identity into an existing application with users, roles and business rules.
+
+## New applications
+
+- **[New Application Integration Guide](new-application-sso.md)** — OIDC sign-in, JIT applicant provisioning, staff invitations, no-app-account scenarios, local roles and API authorization.
+- **[New Public Service Portal case study](../case-studies/new-public-service-portal.md)** — applicant and staff journeys, first login, permissions and UAT.
+- **[New Application Architecture infographic](../assets/earthid-new-application-integration.svg)** — authentication to provisioning policy to application authorization.
+
+![New EarthID Enterprise application architecture](../assets/earthid-new-application-integration.svg)
 
 ## Visual architecture
 
@@ -20,6 +28,8 @@ Framework starters answer **how to initiate OIDC login**. These guides explain *
 
 | Your situation | Read |
 | --- | --- |
+| I am building a **new application** and want EarthID sign-in from day one | [New Application SSO-First Guide](new-application-sso.md) |
+| I want a scenario with new applicants and approved staff | [New Public Service Portal case study](../case-studies/new-public-service-portal.md) |
 | I want to know who handles authentication vs authorization | [AuthN / AuthZ responsibility matrix](authentication-vs-authorization.md) |
 | I'm unsure whether users must log in twice or whether their user ID expires | [Developer FAQ](FAQ.md) |
 | I want secure production implementation guidance | [Integration best practices](best-practices.md) |

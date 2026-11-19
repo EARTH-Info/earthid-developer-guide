@@ -142,10 +142,33 @@ It provides a [vendor deployment-readiness template](vendor-readiness.md). Actua
 
 **Neither is automatic.** An unlink operation removes the **application's external identity mapping**. It does not delete the local account, its data or existing business audit records, and it is not global EarthID logout. Define app-session revocation explicitly. **Do not allow an EarthID-only user to self-unlink without an alternative approved sign-in/recovery path.**
 
+## Starting a new application
+
+### 33. Should I create username/password registration for a new EarthID-integrated app?
+
+Usually **no**. When EarthID Enterprise is the sign-in provider, use OIDC and create a minimal local application user/profile **only when needed** for business records, audit or permissions. There is no need for another routine app password. See [New Application SSO-First Guide](new-application-sso.md).
+
+### 34. Does first EarthID login automatically create a user?
+
+No. **Your application chooses** its onboarding policy: approved public applicant JIT, staff invitation/preapproval, or no persistent profile. A valid EarthID identity never automatically gains staff/admin permissions.
+
+### 35. Should a new app include Associate/Re-associate/Unlink buttons?
+
+Not by default. If EarthID is the app's only sign-in provider, there is no legacy identity to link, and allowing Unlink could cause account lockout. Show the sign-in provider and local application role; add identity-management controls only with a proven recovery and approval policy.
+
+### 36. Can a new frontend SPA authenticate without a backend?
+
+Yes, as a registered **public client** using Authorization Code + PKCE with **no Client Secret**. It still needs appropriate backend/API authorization whenever private records or protected operations are involved.
+
+### 37. Does EarthID automatically create the local business application account?
+
+Ordinary OIDC authentication does not. **JIT provisioning is implemented by the application** after validating the response and checking its approved access policy, unless the organization has contracted a separate provisioning integration.
+
 ## Quick reference
 
 | What you want | Use |
 | --- | --- |
+| Start a new EarthID-integrated application | [New Application SSO-First Guide](new-application-sso.md) |
 | Let users view and manage their linked EarthID identity | [Linked EarthID Account profile UX](linked-account-profile.md) |
 | Let an existing staff user sign in once and keep local roles | [Existing-app SSO](existing-app-sso.md) |
 | Decide who authenticates and who authorizes | [AuthN vs AuthZ](authentication-vs-authorization.md) |
